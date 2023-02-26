@@ -2,12 +2,15 @@
 1043번: 거짓말
 https://www.acmicpc.net/problem/1043
 
-- BFS
 - 진실을 아는 사람이 참가하는 파티를 모두 제외
 
 ***
-1. 유니온 파인드 
-2. 집합
+1. 집합 
+참고: https://www.acmicpc.net/source/54760044
+2. 유니온 파인드
+참고:
+https://seongonion.tistory.com/131 
+https://velog.io/@dasd412/백준-1043-거짓말-파이썬
 """
 import sys
 input = sys.stdin.readline
@@ -37,7 +40,7 @@ def solution():
                         truth.add(person)
     return cnt              
 
-print(solution())
+# print(solution())
 
 ### 집합
 def solution1():
@@ -62,23 +65,23 @@ def solution1():
         cnt += 1
     return cnt
 
-print(solution1())
+# print(solution1())
 
-### 유니온 파인드 (실패)
-
+### 유니온 파인드
+### union 연산에서 루트 노드의 parent가 아닌 자식 노드의 parent만 변경해서 실패
 def find(parent, x):
     if parent[x] != x:
         parent[x] = find(parent, parent[x])
     return parent[x]
 
 def union(parent, a, b):
-    parentA = find(parent, a)
-    parentB = find(parent, b)
+    a = find(parent, a)
+    b = find(parent, b)
 
-    if parentA < parentB:
-        parent[b] = parentA
+    if a < b:
+        parent[b] = a
     else:
-        parent[a] = parentB
+        parent[a] = b
 
 def solution2():
     N, M = map(int, input().split())
