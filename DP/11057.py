@@ -31,19 +31,31 @@
 dp[i][j] = sum(dp[i-1][j:])
 """
 import sys
+# 내 풀이
+def solution1():
+    N = int(input())
+    if N == 1:
+        print(10)
+        sys.exit(0)
+        
+    # 초기화
+    dp = [[0] * 10 for _ in range(N-1)]
+    for i in range(10):
+        dp[0][i] = 10 - i
+    # DP
+    for i in range(1, N-1):
+        for j in range(10):
+            dp[i][j] = (sum(dp[i-1][j:])) % 10007
 
-N = int(input())
-if N == 1:
-    print(10)
-    sys.exit(0)
+    print(sum(dp[N-2]) % 10007)
     
-dp = [[0] * 10 for _ in range(N-1)]
-# 초기화
-for i in range(10):
-    dp[0][i] = 10 - i
-# DP
-for i in range(1, N-1):
-    for j in range(10):
-        dp[i][j] = (sum(dp[i-1][j:])) % 10007
-
-print(sum(dp[N-2]) % 10007)
+# 다른 풀이
+def solution2():
+    N = int(input())
+    # 초기화
+    dp = [1] * 10
+    # DP
+    for i in range(N):
+        for j in range(1, 10):
+            dp[j] += dp[j-1]
+    print(dp[9] % 10007)
